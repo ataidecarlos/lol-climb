@@ -1,0 +1,58 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    color: goldenrod;
+    background-color: black;
+}
+
+#wallpaper>.image {
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+    min-width: 96%;
+    max-width: 96%;
+    height: auto;
+    position:absolute;
+    opacity: 0.3;
+}
+
+img.emblem {
+    max-width: 100%;
+    height: auto;
+}
+
+p.points {
+    font-family: "BeaufortforLOL-Italic";
+    font-weight: 800;
+    font-size: 4em;
+    margin:0;
+}
+
+.container {
+    display: flex;
+    align-items: center; /* Vertically align items */
+    height: 100%; /* Make the container take up the full viewport height */
+    width: 80%;
+    
+    position: absolute;
+    justify-content: center;
+}
+
+.container-countdown {
+    font-family: "BeaufortforLOL-Italic";
+    font-weight: 800;
+    font-size: 4em;
+    
+    position:absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40%;
+    width: 100%;
+}
+
+.content {
+    text-align: center; /* Center the text inside the container */
+}
