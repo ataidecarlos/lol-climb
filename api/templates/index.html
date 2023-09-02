@@ -14,8 +14,8 @@
     <img class="image" src="{{ url_for('static', filename='images/LoL_Sion_Lumberjack_50.jpg') }}" />
   </div>
 
-  <div class="container-countdown">
-    <h1>1500 points</h1>
+  <div id="countdown">
+    <h1>--:--:--</h1>
   </div>
 
   <div class="container">
@@ -26,7 +26,52 @@
     </p>
   </div>
 
+  <script>
+    // Date announced by Thebausffs. Why tho?
+    var countDownDate = new Date("2023-10-17 23:59:59").getTime();
+    calculate_countdown();
+    var x = setInterval(calculate_countdown, 1000); // Update every 1s
 
+    function zeroPad(num, numZeros) {
+        var an = Math.abs(num);
+        var digitCount = 1 + Math.floor(Math.log(an) / Math.LN10);
+        if (digitCount >= numZeros) {
+            return num;
+        }
+        var zeroString = Math.pow(10, numZeros - digitCount).toString().substr(1);
+        return num < 0 ? '-' + zeroString + an : zeroString + an;
+    }
+
+    function calculate_countdown() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+
+        // date format
+        const options = { day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result
+        if (days < 1){
+            var countdown_result = zeroPad(hours,2) + ":"
+            + zeroPad(minutes,2) + ":" + zeroPad(seconds,2);
+        } else {
+            var countdown_result = days + " days , " + zeroPad(hours,2) + ":"
+            + zeroPad(minutes,2) + ":" + zeroPad(seconds,2);
+        }
+        document.getElementById("countdown").innerHTML = countdown_result;
+
+        // Game over
+        if (distance < 1) {
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "EXPIRED";
+        }
+    }
+</script>
 
 </body>
 

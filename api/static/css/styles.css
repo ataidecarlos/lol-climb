@@ -40,10 +40,10 @@ p.points {
     justify-content: center;
 }
 
-.container-countdown {
+#countdown {
     font-family: "BeaufortforLOL-Italic";
     font-weight: 800;
-    font-size: 4em;
+    font-size: 8em;
     
     position:absolute;
     display: flex;
