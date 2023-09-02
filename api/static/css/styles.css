@@ -45,12 +45,12 @@ p.points {
     font-weight: 800;
     font-size: 8em;
     
-    position:absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 40%;
     width: 100%;
+    position:absolute;
 }
 
 .content {
