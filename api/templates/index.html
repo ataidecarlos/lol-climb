@@ -10,19 +10,19 @@
 
 <body>
 
-  <div id="countdown">
-    <h1>--:--:--</h1>
+  <div id="wallpaper">
+    <img class="image" src="{{ url_for('static', filename='images/LoL_Sion_Lumberjack_Dark_50.png') }}" />
   </div>
 
-  <div id="wallpaper">
-    <img class="image" src="{{ url_for('static', filename='images/LoL_Sion_Lumberjack_50.jpg') }}" />
+  <div id="countdown">
+    <h1>--:--:--</h1>
   </div>
 
   <div class="container">
     <img class="emblem" src="{{ url_for('static', filename='images/Challenger_glow.png') }}"
       style="width: 25%;height: auto; opacity: 1" />
     <p class="points">
-      1500 Points
+      6566 Points
     </p>
   </div>
 
@@ -32,15 +32,15 @@
     calculate_countdown();
     var x = setInterval(calculate_countdown, 1000); // Update every 1s
 
-    function zeroPad(num, numZeros) {
-        var an = Math.abs(num);
-        var digitCount = 1 + Math.floor(Math.log(an) / Math.LN10);
-        if (digitCount >= numZeros) {
-            return num;
+    function zeroPad(num) {
+            var num = Math.round(num)
+            if (num < 10) {
+                return "0" + num
+            }
+            else {
+                return num
+            }
         }
-        var zeroString = Math.pow(10, numZeros - digitCount).toString().substr(1);
-        return num < 0 ? '-' + zeroString + an : zeroString + an;
-    }
 
     function calculate_countdown() {
         var now = new Date().getTime();
@@ -57,11 +57,9 @@
 
         // Output the result
         if (days < 1){
-            var countdown_result = zeroPad(hours,2) + ":"
-            + zeroPad(minutes,2) + ":" + zeroPad(seconds,2);
+            var countdown_result = zeroPad(hours) + ":" + zeroPad(minutes) + ":" + zeroPad(seconds);
         } else {
-            var countdown_result = days + " days , " + zeroPad(hours,2) + ":"
-            + zeroPad(minutes,2) + ":" + zeroPad(seconds,2);
+            var countdown_result = days + " days , " + zeroPad(hours) + ":" + zeroPad(minutes) + ":" + zeroPad(seconds);
         }
         document.getElementById("countdown").innerHTML = countdown_result;
 

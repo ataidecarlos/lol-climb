@@ -15,7 +15,6 @@ body {
     max-width: 96%;
     height: auto;
     position:absolute;
-    opacity: 0.3;
 }
 
 img.emblem {
@@ -28,6 +27,7 @@ p.points {
     font-weight: 800;
     font-size: 4em;
     margin:0;
+    margin-left: 5%;
 }
 
 .container {
@@ -38,6 +38,7 @@ p.points {
     
     position: absolute;
     justify-content: center;
+    margin-left: 10%;
 }
 
 #countdown {
