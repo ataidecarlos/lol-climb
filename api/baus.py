@@ -12,7 +12,7 @@ class Summoner:
     losses: int
 
 
-APIKEY: str = 'RGAPI-4b675324-2d89-4a01-8d45-3a9b770592b6'
+APIKEY: str = 'RGAPI-befbff42-ffc8-4bbc-a209-db8431b401ea'
 
 def fetch_from_api(summoner: str):
     # get the summoner by id
