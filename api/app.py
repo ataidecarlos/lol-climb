@@ -14,7 +14,11 @@ def index():
       return render_template('error.html')
    else:
       thebausffs: rito.Summoner = rito.get_summoner_details(summoner_id)
-      return render_template('index.html', league_points = thebausffs.league_points)
+      template_vars: dict = {
+         "tier": thebausffs.tier,
+         "league_points": thebausffs.league_points
+      }
+      return render_template('index.html', summoner=template_vars)
 
 if __name__ == '__main__':
    app.run()

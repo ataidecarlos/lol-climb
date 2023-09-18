@@ -30,6 +30,19 @@ p.points {
     margin-left: 5%;
 }
 
+#announcer {
+    font-family: "BeaufortforLOL-Italic";
+    font-weight: 600;
+    font-size: 6em;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40%;
+    width: 100%;
+    position:absolute;
+}
+
 .container {
     display: flex;
     align-items: center; /* Vertically align items */
