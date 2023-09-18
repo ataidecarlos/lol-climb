@@ -60,26 +60,9 @@ def filter_result(summoner_json) -> Summoner:
     ...
 
 
-def placement(summoner: Summoner):
-
-    message: str = "Long way to go ..."
-
-    if summoner.tier == "CHALLENGER":
-        message = f'Tier: {summoner.tier}, points: 123'
-    elif summoner.tier == "GRANDMASTER":
-        message = f'Tier: {summoner.tier}. Getting close.'
-    elif summoner.tier == "MASTER":
-        message = f'Tier: {summoner.tier}. The climb is real!'
-
-    print(message)
-    #nothing
-    ...
-
-    
-
 
 if __name__ == "__main__":
-    summoner_id = get_summoner_id('thebausffs')
+    summoner_id = get_summoner_id('Thebausffs')
     if type(summoner_id) == int:
         print(summoner_id)
         quit()
