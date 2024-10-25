@@ -2,70 +2,80 @@ import constants
 import requests, json
 from dataclasses import dataclass
 
-@dataclass
-class Summoner:
-    name: str
-    summoner_id: str
-    tier: str
-    league_points: int
-    wins: int
-    losses: int
+# Rewriting the whole thing as the latest API version forces the usage of Riot ID and is not backwards compatible
 
+@dataclass
+class summoner:
+    id: str
+    accountId: str
+    puuid: str
+    profileIconId: int
+    revisionDate: int
+    summonerLevel: int
+    gameName: str
+    tagLine: str
 
 APIKEY: str = constants.RIOT_API
 
-def get_summoner_id(summoner: str) -> str:
-    """Returns the summoners id, taking summoner name as input."""
-    uri: str = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summoner}?api_key={APIKEY}'
+def control_by_puuid(current: summoner, region: str) -> str:
+    """Returns Summoner dataclass, takes ign and tagLine as input."""
+    uri: str = f'https://{region}.api.riotgames.com/riot/account/v1/accounts/by-puuid/{current.puuid}?api_key={APIKEY}'
 
     result  = requests.get(uri)
     if (result.status_code != 200):
         return (result.status_code) * -1
     
-    return json.loads(result.content)['id']
+    current.puuid = json.loads(result.content)['puuid']
+    current.gameName = json.loads(result.content)['gameName']
+    current.tagLine = json.loads(result.content)['tagLine']
+    return current
 
-
-def get_summoner_details(summoner_id: int) -> Summoner:
-    """Returns Summoner dataclass, takes summoner id as input."""
+def get_summoner_details(current: summoner, server) -> summoner:
+    """Returns summoner dataclass, takes puuid as input."""
     
-    # This API call returns a list with details for every queue type (RANKED_SOLO_5x5, RANKED_FLEX_SR, etc)
-    uri = f'https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/{summoner_id}?api_key={APIKEY}'
+    uri = f'https://{server}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{current.puuid}?api_key={APIKEY}'
     
     result = requests.get(uri)
     if (result.status_code != 200):
         return (result.status_code) * -1
     
-    current_summoner: Summoner = filter_result(json.loads(result.content))
-    return current_summoner
-
-
-def filter_result(summoner_json) -> Summoner:
-    """Grab only relevant data from JSON response"""
-    for current_q in summoner_json:
-        if current_q['queueType'] == "RANKED_SOLO_5x5":
-
-            summoner = Summoner(
-                current_q['summonerName'],
-                current_q['summonerId'],
-                current_q['tier'],
-                current_q['leaguePoints'],
-                current_q['wins'],
-                current_q['losses']
-            )
-
-            return(summoner)
-
-        else:
-            continue
-    ...
-
+    current.profileIconId = json.loads(result.content)['profileIconId']
+    current.revisionDate = json.loads(result.content)['revisionDate']
+    current.summonerLevel = json.loads(result.content)['summonerLevel']
+    return current
 
 
 if __name__ == "__main__":
-    summoner_id = get_summoner_id('Thebausffs')
-    if type(summoner_id) == int:
-        print(summoner_id)
+    
+    # This is hardcorded, both as an example on how to get started in collecting the rest of the data, as well as a control
+    # puuid = cwMcGIF_5yzQF-un6ytkmvpbfSyK_sdbckJWKgXmPBjxqJqQs1xcGMdwTenUFMxcec0jTJHqOkqBTA
+
+    region: str = "europe"
+    server: str = "euw1"
+
+    thebausffs = summoner(
+        id="0wHjHMzY2DfBScnTL5rkgeA5Vv-VpcXI0vzEr88Py_x-boTr",
+        accountId="xc-weeq93oZB_S1U1hOhevG8EWr1HIZ6NKiZqWPAzSkagBU",
+        puuid="cwMcGIF_5yzQF-un6ytkmvpbfSyK_sdbckJWKgXmPBjxqJqQs1xcGMdwTenUFMxcec0jTJHqOkqBTA",
+        profileIconId=0,
+        revisionDate=0,
+        summonerLevel=0,
+        gameName="",
+        tagLine=""
+    )
+    print(thebausffs)
+
+    control: summoner = control_by_puuid(thebausffs, region)    
+    if control.puuid != thebausffs.puuid:
+        print(f"Error: puuid mismatch. {control.puuid} != {thebausffs.puuid}")
         quit()
     
-    thebausffs: Summoner = get_summoner_details(summoner_id)
-    print(f'Tier: {thebausffs.tier}, Points: {thebausffs.league_points}')
+    thebausffs.gameName = control.gameName
+    thebausffs.tagLine = control.tagLine
+    print(thebausffs)
+
+    thebausffs = get_summoner_details(thebausffs, server)
+    print(thebausffs)
+    
+
+
